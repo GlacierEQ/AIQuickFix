@@ -1,5 +1,7 @@
+// The module 'vscode' contains the VS Code extensibility API
+// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { getGptFix } from "./openaiservice"; // Ensure this function is updated for open-source models
+import { getGptFix } from "./openaiservice";
 
 // This method is called when your extension is deactivated
 export function deactivate() {
@@ -21,7 +23,9 @@ export class OpenAIFixActionProvider implements vscode.CodeActionProvider {
       return [];
     }
 
-    const config = vscode.workspace.getConfiguration("haselerdev.aiquickfix");
+    const config = vscode.workspace.getConfiguration(
+      "haselerdev.aiquickfix"
+    );
     const apiKey = config.get<string>("apiKey");
 
     // Ensure the API Key is available
@@ -32,9 +36,11 @@ export class OpenAIFixActionProvider implements vscode.CodeActionProvider {
           { modal: false },
           { title: "Open Settings" }
         )
-        .then((selection: vscode.QuickPickItem | undefined) => {
+        .then((selection) => {
           if (selection && selection.title === "Open Settings") {
-            vscode.commands.executeCommand("haselerdev.aiquickfix.openSettings");
+            vscode.commands.executeCommand(
+              "haselerdev.aiquickfix.openSettings"
+            );
           }
         });
 
@@ -52,7 +58,7 @@ export class OpenAIFixActionProvider implements vscode.CodeActionProvider {
         vscode.CodeActionKind.QuickFix
       );
       action.command = {
-        title: "Request Fix using Open Source AI",
+        title: "Request Fix using OpenAI API",
         command: "gptAIProblemFixerCommand",
         arguments: [document, problemRange],
       };
@@ -71,14 +77,19 @@ function openYourExtensionSettings() {
 }
 export let getGptFixFn = getGptFix;
 
+
 export function activate(context: vscode.ExtensionContext) {
   // Set context as a global as some tests depend on it
   (global as any).testExtensionContext = context;
+  
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("haselerdev.aiquickfix.openSettings", () => {
-      openYourExtensionSettings();
-    })
+    vscode.commands.registerCommand(
+      "haselerdev.aiquickfix.openSettings",
+      () => {
+        openYourExtensionSettings();
+      }
+    )
   );
 
   context.subscriptions.push(
@@ -86,7 +97,8 @@ export function activate(context: vscode.ExtensionContext) {
       { pattern: "**/*", scheme: "file" },
       new OpenAIFixActionProvider(),
       {
-        providedCodeActionKinds: OpenAIFixActionProvider.providedCodeActionKinds,
+        providedCodeActionKinds:
+          OpenAIFixActionProvider.providedCodeActionKinds,
       }
     )
   );
@@ -104,9 +116,11 @@ export function activate(context: vscode.ExtensionContext) {
       );
       const problemCode = document.getText(functionRange || extendedRange);
 
-      const config = vscode.workspace.getConfiguration("haselerdev.aiquickfix");
+      const config = vscode.workspace.getConfiguration(
+        "haselerdev.aiquickfix"
+      );
       const apiKey = config.get<string>("apiKey");
-      const model = config.get<string>("model") || "open-source-model"; // Update to use open-source model
+      const model = config.get<string>("model") || "gpt-3.5-turbo";
       if (!apiKey) {
         vscode.window
           .showErrorMessage(
@@ -114,9 +128,11 @@ export function activate(context: vscode.ExtensionContext) {
             { modal: false },
             { title: "Open Settings" }
           )
-          .then((selection: vscode.QuickPickItem | undefined) => {
+          .then((selection) => {
             if (selection && selection.title === "Open Settings") {
-              vscode.commands.executeCommand("haselerdev.aiquickfix.openSettings");
+              vscode.commands.executeCommand(
+                "haselerdev.aiquickfix.openSettings"
+              );
             }
           });
 
@@ -131,7 +147,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       // Replace the text with the returned fix
-      await editor.edit((editBuilder: vscode.TextEditorEdit) => {
+      await editor.edit((editBuilder) => {
         editBuilder.replace(functionRange || extendedRange, fix);
       });
     }

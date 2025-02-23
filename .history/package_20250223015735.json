@@ -1,10 +1,10 @@
 {
   "name": "aiquickfix",
-  "displayName": "AI QuickFix: Instantly fix problems with Open Source AI",
-  "description": "Use open-source AI tools to find one-click 'lightbulb menu' solutions to problems in your code.",
+  "displayName": "AI QuickFix: Instantly fix problems with ChatGPT AI",
+  "description": "Use ChatGPT and GPT-4 AI tools to find one-click 'lightbulb menu' solutions to problems in your code flagged by your editor, linter, and other code quality tools.",
   "publisher": "haselerdev",
   "author": "Craig Haseler",
-  "version": "1.0.0",
+  "version": "0.0.3",
   "license": "MIT",
   "icon": "images/icon.png",
   "galleryBanner": {

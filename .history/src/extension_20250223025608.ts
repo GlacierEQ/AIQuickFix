@@ -32,7 +32,7 @@ export class OpenAIFixActionProvider implements vscode.CodeActionProvider {
           { modal: false },
           { title: "Open Settings" }
         )
-        .then((selection: vscode.QuickPickItem | undefined) => {
+        .then((selection) => {
           if (selection && selection.title === "Open Settings") {
             vscode.commands.executeCommand("haselerdev.aiquickfix.openSettings");
           }
@@ -114,7 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
             { modal: false },
             { title: "Open Settings" }
           )
-          .then((selection: vscode.QuickPickItem | undefined) => {
+          .then((selection) => {
             if (selection && selection.title === "Open Settings") {
               vscode.commands.executeCommand("haselerdev.aiquickfix.openSettings");
             }
@@ -131,7 +131,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       // Replace the text with the returned fix
-      await editor.edit((editBuilder: vscode.TextEditorEdit) => {
+      await editor.edit((editBuilder) => {
         editBuilder.replace(functionRange || extendedRange, fix);
       });
     }
