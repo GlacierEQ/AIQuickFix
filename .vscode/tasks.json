@@ -2,25 +2,31 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "watch",
       "type": "npm",
       "script": "watch",
+      "problemMatcher": "$tsc-watch",
       "isBackground": true,
       "presentation": {
-        "reveal": "silent"
+        "reveal": "never"
       },
       "group": {
         "kind": "build",
         "isDefault": true
-      },
-      "problemMatcher": {
-        "base": "$tsc-watch",
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": "Starting compilation in watch mode...",
-          "endsPattern": "Found 0 errors. Watching for file changes."
-        }
       }
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run Extension",
+      "type": "shell",
+      "command": "code --extensionDevelopmentPath=${workspaceFolder}"
     }
   ]
 }
